@@ -1,3 +1,4 @@
+//objeto de cada opção no cadastro
 class Despesa {
 	constructor(ano, mes, dia, tipo, descricao, valor) {
 		this.ano = ano
@@ -8,6 +9,7 @@ class Despesa {
 		this.valor = valor
 	}
 
+	//faz a validação para que nada vá vazio
 	validarDados() {
 		for(let i in this) {
 			if(this[i] == undefined || this[i] == '' || this[i] == null) {
@@ -19,7 +21,7 @@ class Despesa {
 }
 
 class Bd {
-
+//caso nao tenha nada gravado no localsrage sera gerado o id zero
 	constructor() {
 		let id = localStorage.getItem('id')
 
@@ -28,11 +30,13 @@ class Bd {
 		}
 	}
 
+// a cada nova inclusão sera adicionado um novo id sequencial, começando do zero
 	getProximoId() {
 		let proximoId = localStorage.getItem('id')
 		return parseInt(proximoId) + 1
 	}
 
+	//grava o objeto salvo dentro do localstorage
 	gravar(d) {
 		let id = this.getProximoId()
 
@@ -121,7 +125,7 @@ class Bd {
 
 let bd = new Bd()
 
-
+//cria os objetos que serão setados no local storage
 function cadastrarDespesa() {
 
 	let ano = document.getElementById('ano')
@@ -140,7 +144,7 @@ function cadastrarDespesa() {
 		valor.value
 	)
 
-
+//faz a verificação se todos os dados foram inseridos certos
 	if(despesa.validarDados()) {
 		bd.gravar(despesa)
 
@@ -173,6 +177,7 @@ function cadastrarDespesa() {
 	}
 }
 
+//faz com que quando você estre na parte de despesas elas sejam mostradas em tabelas
 function carregaListaDespesas(despesas = Array(), filtro = false) {
 
     if(despesas.length == 0 && filtro == false){
@@ -219,7 +224,7 @@ function carregaListaDespesas(despesas = Array(), filtro = false) {
 		linha.insertCell(2).innerHTML = d.descricao
 		linha.insertCell(3).innerHTML = d.valor
 
-		//Criar o botão de exclusão
+		//Cria o botão de exclusão
 		let btn = document.createElement('button')
 		btn.className = 'btn btn-danger'
 		btn.innerHTML = '<i class="fa fa-times"  ></i>'
@@ -236,9 +241,9 @@ function carregaListaDespesas(despesas = Array(), filtro = false) {
 
  }
 
-
+// função faz a pesquisa com o que você selecionar no filtro
  function pesquisarDespesa(){
-	 
+
 	let ano  = document.getElementById("ano").value
 	let mes = document.getElementById("mes").value
 	let dia = document.getElementById("dia").value
@@ -253,5 +258,4 @@ function carregaListaDespesas(despesas = Array(), filtro = false) {
 	this.carregaListaDespesas(despesas, true)
 
  }
- //teste para subir no guthub
  
